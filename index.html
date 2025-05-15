@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti, mi amor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffcce6, #ff99cc);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            max-width: 500px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            color: #ff4d88;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .heart {
+            font-size: 70px;
+            color: #ff4d88;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+        
+        .heart:hover {
+            transform: scale(1.1);
+        }
+        
+        .heart:active {
+            transform: scale(0.8);
+        }
+        
+        .message {
+            font-size: 16px;
+            color: #666;
+            margin: 15px 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+            font-style: italic;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+        
+        .visible {
+            opacity: 1;
+        }
+        
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 16px;
+            color: #ff4d88;
+            animation: float linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        button {
+            background-color: #ff4d88;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            width: 90%;
+            max-width: 250px;
+        }
+        
+        button:hover {
+            background-color: #ff3377;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(255, 77, 136, 0.4);
+        }
+
+        /* Estilos específicos para pantallas más grandes */
+        @media (min-width: 768px) {
+            .container {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .heart {
+                font-size: 100px;
+            }
+            
+            .message {
+                font-size: 18px;
+            }
+            
+            button {
+                width: auto;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hola mi niña bonita</h1>
+        
+        <div class="heart" id="heart">❤️</div>
+        
+        <div class="message" id="message1">
+            Como ha sido bonita mi vida otra vez desde que regresaste a mi vida
+        </div>
+        
+        <div class="message" id="message2">
+            Eres todo lo que algun dia le pedi a Dios, y no sabes como le agradezco por haberte puesto en mi camino
+        </div>
+        
+        <div class="message" id="message3">
+            Cada que paso contigo atesoro mucho cada momento que estoy viviendo junto a ti
+        </div>
+        
+        <div class="message" id="message4">
+            Se que lo nuestro va a ser algo muy bonito, y que vamos a vivir muchas cosas juntos
+        </div>
+        
+        <div class="message" id="message5">
+            Te quiero mucho mucho mi niña bonita
+        </div>
+        
+        <button id="surpriseBtn">¡Toca para otra sorpresa!</button>
+    </div>
+    
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <script>
+        const heart = document.getElementById('heart');
+        const messages = [
+            document.getElementById('message1'),
+            document.getElementById('message2'),
+            document.getElementById('message3'),
+            document.getElementById('message4'),
+            document.getElementById('message5')
+        ];
+        const surpriseBtn = document.getElementById('surpriseBtn');
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        let currentMessage = 0;
+        
+        // Mostrar mensajes al hacer clic en el corazón
+        heart.addEventListener('click', function() {
+            // Ocultar mensaje actual
+            if (currentMessage > 0) {
+                messages[currentMessage - 1].classList.remove('visible');
+            }
+            
+            // Mostrar nuevo mensaje
+            messages[currentMessage].classList.add('visible');
+            currentMessage = (currentMessage + 1) % messages.length;
+            
+            // Crear corazones flotantes
+            createHearts(5);
+        });
+        
+        // Botón sorpresa
+        surpriseBtn.addEventListener('click', function() {
+            createHearts(30);
+            surpriseBtn.textContent = "¡TE QUIEROOOOOOOOOOOOOOOOOO!";
+            setTimeout(() => {
+                surpriseBtn.textContent = "¡Toca para otra sorpresa!";
+            }, 2000);
+        });
+        
+        // Crear corazones flotantes
+        function createHearts(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤎', '🖤'][Math.floor(Math.random() * 8)];
+                    heart.classList.add('floating-heart');
+                    
+                    // Posición aleatoria
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '100vh';
+                    
+                    // Tamaño aleatorio
+                    const size = 15 + Math.random() * 25;
+                    heart.style.fontSize = size + 'px';
+                    
+                    // Duración y delay aleatorio
+                    const duration = 3 + Math.random() * 7;
+                    heart.style.animationDuration = duration + 's';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    
+                    heartsContainer.appendChild(heart);
+                    
+                    // Hacer visible
+                    setTimeout(() => {
+                        heart.style.opacity = '0.7';
+                    }, 10);
+                    
+                    // Eliminar después de la animación
+                    setTimeout(() => {
+                        heart.remove();
+                    }, duration * 1000);
+                }, i * 300);
+            }
+        }
+        
+        // Mostrar primer mensaje después de 2 segundos
+        setTimeout(() => {
+            messages[0].classList.add('visible');
+            currentMessage = 1;
+        }, 2000);
+    </script>
+</body>
+</html>
